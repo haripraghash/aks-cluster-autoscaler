@@ -1,0 +1,30 @@
+# Starter pipeline
+# Start with a minimal pipeline that you can customize to build and deploy your code.
+# Add steps that build, run tests, deploy, and more:
+# https://aka.ms/yaml
+
+trigger:
+- master
+
+pool:
+  vmImage: 'Ubuntu-16.04'
+
+steps:
+- task: CopyFiles@2
+  displayName: Copy provisioning scripts
+  inputs:
+    SourceFolder: productapik8scluster-provisioning
+    Contents: |
+     **\*.json
+     !bin/**/*
+     **\*.ps1
+     !bin/**/*
+    TargetFolder: '$(build.artifactstagingdirectory)/iac'
+
+
+- task: PublishBuildArtifacts@1
+  displayName: Publish infrastructure artifacts
+  inputs:
+    PathtoPublish: '$(build.artifactstagingdirectory)/iac'
+    ArtifactName: iac
+
