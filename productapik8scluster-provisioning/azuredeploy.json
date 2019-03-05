@@ -205,22 +205,17 @@
           "addressPrefixes": [
             "[parameters('clusterVnetAddressPrefix')]"
           ]
-        }
-      },
-      "resources": [
-        {
-          "apiVersion": "2018-10-01",
-          "type": "subnets",
-          "location": "[parameters('location')]",
-          "name": "[parameters('clusterSubnetName')]",
-          "dependsOn": [
-            "[parameters('clusterVnetName')]"
-          ],
-          "properties": {
-            "addressPrefix": "[parameters('clusterSubnetAddressPrefix')]"
+        },
+        "subnets":[
+          {
+            "name": "[parameters('clusterSubnetName')]",
+            "id": "[parameters('clusterSubnetName')]",
+            "properties": {
+              "addressPrefix": "[parameters('clusterSubnetAddressPrefix')]"
+              }
           }
-        }
-      ]
+        ]
+      }
     },
     {
       "apiVersion": "2018-03-31",
