@@ -95,12 +95,14 @@
     },
     "kubernetesVersion": {
       "type": "string",
-      "defaultValue": "1.12.4",
+      "defaultValue": "1.12.6",
       "allowedValues": [
         "1.9.11",
         "1.10.9",
         "1.11.5",
-        "1.12.4"
+        "1.12.4",
+        "1.12.5",
+        "1.12.6"
       ],
       "metadata": {
         "description": "The version of Kubernetes."
@@ -227,7 +229,7 @@
         "[resourceId('Microsoft.Network/virtualNetworks', parameters('clusterVnetName'))]"
       ],
       "properties": {
-        "kubernetesVersion": "1.12.5",
+        "kubernetesVersion": "[parameters('kubernetesVersion')]",
         "dnsPrefix": "[parameters('dnsPrefix')]",
         "agentPoolProfiles": [
           {
@@ -274,6 +276,9 @@
             "config": {
               "logAnalyticsWorkspaceResourceID": "[resourceId('Microsoft.OperationalInsights/workspaces',parameters('logAnalyticsWorkSpaceName'))]"
             }
+          },
+          "httpApplicationRouting": {
+            "enabled": true
           }
         }
       }
