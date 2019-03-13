@@ -243,8 +243,14 @@
           }
         ],
         "linuxProfile": {
-          "adminUsername": "[parameters('linuxAdminUsername')]"
-          
+          "adminUsername": "[parameters('linuxAdminUsername')]",
+          "ssh": {
+            "publicKeys": [
+              {
+                "keyData": "[parameters('sshRSAPublicKey')]"
+              }
+            ]
+          }
         },
         "servicePrincipalProfile": {
           "clientId": "[parameters('servicePrincipalClientId')]",
