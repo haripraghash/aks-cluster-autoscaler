@@ -281,7 +281,76 @@
             "enabled": true
           }
         }
-      }
+      },
+      "resources" : [
+        {
+          "type": "providers/diagnosticSettings",
+          "name": "[concat('Microsoft.Insights/', 'productdevcluster-diagnostics')]",
+          "apiVersion": "2017-05-01-preview",
+          "properties": {
+            "name": "productdevcluster-diagnostics",
+            "storageAccountId": null,
+            "eventHubAuthorizationRuleId": null,
+            "eventHubName": null,
+            "workspaceId": "[resourceId('Microsoft.OperationalInsights/workspaces',parameters('logAnalyticsWorkSpaceName'))]",
+            "logs": [
+              {
+                "category": "kube-apiserver",
+                "enabled": true,
+                "retentionPolicy": {
+                  "days": 10,
+                  "enabled": true
+                }
+              },
+              {
+                "category": "kube-controller-manager",
+                "enabled": true,
+                "retentionPolicy": {
+                  "days": 10,
+                  "enabled": true
+                }
+              },
+              {
+                "category": "cluster-autoscaler",
+                "enabled": true,
+                "retentionPolicy": {
+                  "days": 10,
+                  "enabled": true
+                }
+              },
+              {
+                "category": "kube-scheduler",
+                "enabled": true,
+                "retentionPolicy": {
+                  "days": 10,
+                  "enabled": true
+                }
+              },
+              {
+                "category": "kube-audit",
+                "enabled": true,
+                "retentionPolicy": {
+                  "days": 10,
+                  "enabled": true
+                }
+              }
+            ],
+            "metrics": [
+              {
+                "timeGrain": "PT1M",
+                "enabled": true,
+                "retentionPolicy": {
+                  "enabled": true,
+                  "days": 10
+                }
+              }
+            ]
+          },
+          "dependsOn": [
+            "[resourceId('Microsoft.OperationalInsights/workspaces', parameters('logAnalyticsWorkSpaceName'))]"
+          ]
+        }
+      ]
     },
     {
       "type": "Microsoft.Resources/deployments",
