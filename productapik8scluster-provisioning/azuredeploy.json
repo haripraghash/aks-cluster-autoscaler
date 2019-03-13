@@ -347,7 +347,8 @@
             ]
           },
           "dependsOn": [
-            "[resourceId('Microsoft.OperationalInsights/workspaces', parameters('logAnalyticsWorkSpaceName'))]"
+            "[resourceId('Microsoft.OperationalInsights/workspaces', parameters('logAnalyticsWorkSpaceName'))]",
+            "[resourceId('Microsoft.ContainerService/managedClusters', parameters('resourceName'))]"
           ]
         }
       ]
