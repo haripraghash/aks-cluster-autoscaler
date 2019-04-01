@@ -5,6 +5,7 @@
 
 trigger:
 - master
+- develop
 
 pool:
   vmImage: 'Ubuntu-16.04'
@@ -14,11 +15,6 @@ steps:
   displayName: Copy provisioning scripts
   inputs:
     SourceFolder: productapik8scluster-provisioning
-    Contents: |
-     **\*.json
-     !bin/**/*
-     **\*.ps1
-     !bin/**/*
     TargetFolder: '$(build.artifactstagingdirectory)/iac'
 
 

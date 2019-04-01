@@ -9,7 +9,7 @@
       "value": "hari"
     },
     "sshRSAPublicKey": {
-      "value": "ssh-rsa AAAAB3NzaC1yc2EAAAABJQAAAQEAzniIa/oYZJdLQezwS0181Qfn9YuZffx69pheOAqB/CrYP+TWS0AX6cOGz1Ixjgf1QBAQXy8gAG3qlXBhhKtF61AZvNCe+0Rn5eg/AcHDR0BVYpfxaDSTNSTR76+mtQvzivl8H+qYCxLAEtU99xwV0KDW7slfhOmJv+9f6Y0CgCX4Gu6PhMWYN4HS4+5Q80tLNUVW4cI0VmM2yf+itwA318Py+AqulbgNne/sKTZ1ehOS2Xualt/MzKGpO1UX0uE/YRXzeQ4H5gIvvbchcrfru1Re2cYIj3EJJaV9Uk8DYAaGayH0hjgb2l633BBrcf3u1MVsjZPXyY8OCrXFfeHo2w== rsa-key-20190303"
+      "value": ""
     },
     "resourceName": {
       "value": "product-dev-eun-cluster"
@@ -20,48 +20,14 @@
     "clusterSubnetAddressPrefix": {
       "value": "10.240.0.0/16"
     },
-    "servicePrincipalClientId": {
-      "value": "16d22a80-41ae-4e17-87f2-8d2b849ebe59"
-    },
-    "servicePrincipalClientSecret": {
-      "value": "771c6ac8-17e8-41de-beee-363d58488e56"
-    },
     "kubernetesVersion": {
       "value": "1.10.9"
     },
-    "aadClientAppId": {
-      "type": "securestring",
-      "value": "4cc2a436-d040-492b-8d5c-6d5bce18b5fa",
-      "metadata": {
-        "description": "Application id of the AAD client application"
-      }
-    },
-    "aadServerAppId": {
-      "type": "securestring",
-      "value": "6a005b67-8c72-4c5d-b358-d297b195126b",
-      "metadata": {
-        "description": "Application id of the AAD server application"
-      }
-    },
-    "aadServerAppSecret": {
-      "type": "securestring",
-      "value": "OwcC2xM8rIYl1vybBW8/+5e4DyeGiI0pS6cXwqPY4NE=",
-      "metadata": {
-        "description": "Secret of the AAD server application"
-      }
-    },
-    "aadTenantId": {
-      "type": "securestring",
-      "value": "aa2bb2c7-7968-454a-b359-ab562956de2c",
-      "metadata": {
-        "description": "Tenant id of the AAD tenant"
-      }
-    },
     "servicePrincipalObjectId": {
-      "value": "0c1a809c-ec42-4151-aed2-348db6ad2d2b"
+      "value": ""
     },
     "networkContributorRoleId": {
-      "value": "4d97b98b-1d4f-4787-a291-c67834d212e7"
+      "value": ""
     }
   }
 }

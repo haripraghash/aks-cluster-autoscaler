@@ -95,12 +95,14 @@
     },
     "kubernetesVersion": {
       "type": "string",
-      "defaultValue": "1.12.4",
+      "defaultValue": "1.12.6",
       "allowedValues": [
         "1.9.11",
         "1.10.9",
         "1.11.5",
-        "1.12.4"
+        "1.12.4",
+        "1.12.5",
+        "1.12.6"
       ],
       "metadata": {
         "description": "The version of Kubernetes."
@@ -115,7 +117,7 @@
     },
     "clusterVnetAddressPrefix": {
       "type": "string",
-      "defaultValue": "productcluster-dev-eun-vnet",
+      "defaultValue": "10.0.0.0/8",
       "metadata": {
         "description": "The product k8s cluster vnet address CIDR"
       }
@@ -129,7 +131,7 @@
     },
     "clusterSubnetAddressPrefix": {
       "type": "string",
-      "defaultValue": "productcluster-dev-eun-vnet",
+      "defaultValue": "10.240.0.0/16",
       "metadata": {
         "description": "The product k8s cluster subnet address CIDR"
       }
@@ -205,22 +207,17 @@
           "addressPrefixes": [
             "[parameters('clusterVnetAddressPrefix')]"
           ]
-        }
-      },
-      "resources": [
-        {
-          "apiVersion": "2018-10-01",
-          "type": "subnets",
-          "location": "[parameters('location')]",
-          "name": "[parameters('clusterSubnetName')]",
-          "dependsOn": [
-            "[parameters('clusterVnetName')]"
-          ],
-          "properties": {
-            "addressPrefix": "[parameters('clusterSubnetAddressPrefix')]"
+        },
+        "subnets":[
+          {
+            "name": "[parameters('clusterSubnetName')]",
+            "id": "[parameters('clusterSubnetName')]",
+            "properties": {
+              "addressPrefix": "[parameters('clusterSubnetAddressPrefix')]"
+              }
           }
-        }
-      ]
+        ]
+      }
     },
     {
       "apiVersion": "2018-03-31",
@@ -232,7 +229,7 @@
         "[resourceId('Microsoft.Network/virtualNetworks', parameters('clusterVnetName'))]"
       ],
       "properties": {
-        "kubernetesVersion": "1.12.5",
+        "kubernetesVersion": "[parameters('kubernetesVersion')]",
         "dnsPrefix": "[parameters('dnsPrefix')]",
         "agentPoolProfiles": [
           {
@@ -279,9 +276,82 @@
             "config": {
               "logAnalyticsWorkspaceResourceID": "[resourceId('Microsoft.OperationalInsights/workspaces',parameters('logAnalyticsWorkSpaceName'))]"
             }
+          },
+          "httpApplicationRouting": {
+            "enabled": true
           }
         }
-      }
+      },
+      "resources" : [
+        {
+          "type": "providers/diagnosticSettings",
+          "name": "[concat('Microsoft.Insights/', 'productdevcluster-diagnostics')]",
+          "apiVersion": "2017-05-01-preview",
+          "properties": {
+            "name": "productdevcluster-diagnostics",
+            "storageAccountId": null,
+            "eventHubAuthorizationRuleId": null,
+            "eventHubName": null,
+            "workspaceId": "[resourceId('Microsoft.OperationalInsights/workspaces',parameters('logAnalyticsWorkSpaceName'))]",
+            "logs": [
+              {
+                "category": "kube-apiserver",
+                "enabled": true,
+                "retentionPolicy": {
+                  "days": 10,
+                  "enabled": true
+                }
+              },
+              {
+                "category": "kube-controller-manager",
+                "enabled": true,
+                "retentionPolicy": {
+                  "days": 10,
+                  "enabled": true
+                }
+              },
+              {
+                "category": "cluster-autoscaler",
+                "enabled": true,
+                "retentionPolicy": {
+                  "days": 10,
+                  "enabled": true
+                }
+              },
+              {
+                "category": "kube-scheduler",
+                "enabled": true,
+                "retentionPolicy": {
+                  "days": 10,
+                  "enabled": true
+                }
+              },
+              {
+                "category": "kube-audit",
+                "enabled": true,
+                "retentionPolicy": {
+                  "days": 10,
+                  "enabled": true
+                }
+              }
+            ],
+            "metrics": [
+              {
+                "timeGrain": "PT1M",
+                "enabled": true,
+                "retentionPolicy": {
+                  "enabled": true,
+                  "days": 10
+                }
+              }
+            ]
+          },
+          "dependsOn": [
+            "[resourceId('Microsoft.OperationalInsights/workspaces', parameters('logAnalyticsWorkSpaceName'))]",
+            "[resourceId('Microsoft.ContainerService/managedClusters', parameters('resourceName'))]"
+          ]
+        }
+      ]
     },
     {
       "type": "Microsoft.Resources/deployments",
