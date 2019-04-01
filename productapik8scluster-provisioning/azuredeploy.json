@@ -333,6 +333,14 @@
                   "days": 10,
                   "enabled": true
                 }
+              },
+              {
+                "category": "cluster-autoscaler",
+                "enabled": true,
+                "retentionPolicy": {
+                  "days": 10,
+                  "enabled": true
+                }
               }
             ],
             "metrics": [
