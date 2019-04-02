@@ -251,6 +251,7 @@
             "osDiskSizeGB": 0,
             "maxCount": "[parameters('vmssMaxInstances')]",
             "minCount": "[parameters('vmssMinInstances')]",
+            "count": 1,
             "enableAutoScaling": true,
             "type": "VirtualMachineScaleSets",
             "vmSize": "[parameters('agentVMSize')]",
