@@ -163,6 +163,20 @@
       "metadata": {
         "description": "Tenant id of the AAD tenant"
       }
+    },
+    "vmssMinInstances": {
+      "type": "int",
+      "defaultValue": 1,
+      "metadata": {
+        "description": "Minimum scaled instances"
+      }
+    },
+    "vmssMaxInstances": {
+      "type": "int",
+      "defaultValue": 5,
+      "metadata": {
+        "description": "Maximum scaled instances"
+      }
     }
   },
   "variables": {
@@ -173,7 +187,7 @@
     {
       "type": "Microsoft.Network/virtualNetworks/providers/roleAssignments",
       "name": "[variables('roleAssignmentName')]",
-      "apiVersion": "2017-10-01-preview",
+      "apiVersion": "2018-12-01-preview",
       "dependsOn": [
         "[resourceId('Microsoft.Network/virtualNetworks', parameters('clusterVnetName'))]"
       ],
@@ -220,7 +234,7 @@
       }
     },
     {
-      "apiVersion": "2018-03-31",
+      "apiVersion": "2018-08-01-preview",
       "type": "Microsoft.ContainerService/managedClusters",
       "location": "[parameters('location')]",
       "name": "[parameters('resourceName')]",
@@ -235,7 +249,10 @@
           {
             "name": "agentpool",
             "osDiskSizeGB": 0,
-            "count": 1,
+            "maxCount": "[parameters('vmssMaxInstances')]",
+            "minCount": "[parameters('vmssMinInstances')]",
+            "enableAutoScaling": true,
+            "type": "VirtualMachineScaleSets",
             "vmSize": "[parameters('agentVMSize')]",
             "osType": "[parameters('osType')]",
             "storageProfile": "ManagedDisks",

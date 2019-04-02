@@ -28,6 +28,12 @@
     },
     "networkContributorRoleId": {
       "value": ""
+    },
+    "vmssMinInstances":{
+      "value": ""
+    },
+    "vmssMaxInstances":{
+      "value": ""
     }
   }
 }
