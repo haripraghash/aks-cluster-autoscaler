@@ -1,0 +1,25 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: party-clippy
+spec:
+  replicas: 30
+  template:
+    metadata:
+      labels:
+        app: party-clippy
+    spec:
+      containers:
+      - image: r.j3ss.co/party-clippy
+        name: party-clippy
+        resources:
+          requests:
+            cpu: 900m
+            memory: 2G
+          limits:
+            cpu: 2
+            memory: 2G
+        tty: true
+        command: ["party-clippy"]
+        ports:
+        - containerPort: 8080
